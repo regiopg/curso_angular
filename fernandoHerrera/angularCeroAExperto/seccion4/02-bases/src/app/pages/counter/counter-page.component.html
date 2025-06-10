@@ -1,0 +1,9 @@
+        <h1>Hola mundo</h1>
+        <h2>Counter Page Component</h2>
+        <h3>Counter: {{ counter }}</h3>
+        <h3>CounterSignal: {{ counterSignal() }}</h3>
+        <div>
+            <button (click)='modificarContador(1)'> + </button>
+            <button (click)='restablecerContador()'> Restablecer </button>
+            <button (click)='modificarContador(-1)'> - </button>
+        </div>
