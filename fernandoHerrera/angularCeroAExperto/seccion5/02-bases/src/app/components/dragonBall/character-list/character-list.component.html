@@ -1,0 +1,13 @@
+<h3>{{ listName() }} </h3>
+<ul>
+    @for (character of characters(); track character.id; let indice = $index) {
+        @if(character.power>=100){
+            <li> 
+                <span> {{ indice+1 }} - {{ character.name }}</span> 
+                <strong class="mx-3" [class.text-danger]="character.power>100">{{ character.power }}</strong> 
+            </li>
+        }@else {
+            <strong>Personaje no calificado para la misión</strong>
+        }
+    }
+</ul>

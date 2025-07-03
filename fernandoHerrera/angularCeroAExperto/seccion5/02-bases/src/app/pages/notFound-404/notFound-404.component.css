@@ -1,0 +1,10 @@
+#contenedorCentral{
+    border-radius: 2rem;
+    border:solid .2px #007;
+    width: 50vh;
+    height: 50vh;
+    margin:25vh auto;
+    background: linear-gradient(45deg, #aac, #aaf);
+    color:lightblue;
+    font-size: 5rem;
+}

@@ -1,0 +1,17 @@
+<h3>
+    Dragon ball
+</h3>
+
+<hr>
+
+<section class="row">
+
+    <div class="col-12 col-sm-6">
+        <app-dragon-ball-add-hero (newCharacter)="dragonBallService.agregarHeroe($event)"/>
+    </div>
+
+    <div class="col-12 col-sm-6">
+        <dragonBall-character-list [characters]="dragonBallService.characters()" listName="Listado de superheroes"/>
+    </div>
+
+</section>
