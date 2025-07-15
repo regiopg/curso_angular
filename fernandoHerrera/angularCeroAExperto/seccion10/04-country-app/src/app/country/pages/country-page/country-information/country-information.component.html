@@ -1,0 +1,44 @@
+<section class="mx-10">
+    <h1 class="text-3xl"> {{ country().nombre }} </h1>
+</section>
+
+<div class="stats shadow">
+    <div class="stat place-items-center">
+        <div class="stat-title">Población</div>
+        <div class="stat-value"> {{ country().population | number}} </div>
+        <div class="stat-desc"> {{ anioActual() }} </div>
+    </div>
+    
+    <div class="stat place-items-center">
+        <div class="stat-title">Nombre</div>
+        <div class="stat-value text-secondary"> {{ country().name }} </div>
+        <div class="stat-desc text-secondary"> {{ country().region }} </div>
+    </div>
+    
+    <div class="stat place-items-center">
+        <div class="stat-title"> Subregión </div>
+        <div class="stat-value"> {{ country().subregion }} </div>
+        <div class="stat-desc"> Subregion </div>
+    </div>
+    
+    <div class="stat place-items-center">
+        <div class="stat-title"> Bandera </div>
+        <div class="stat-value"> {{ country().flag }} </div>
+        <div class="stat-desc"> Bandera </div>
+    </div> 
+    
+</div>
+
+<figure class="diff aspect-16/9" tabindex="0">
+    <div class="diff-item-1" 
+        role="img" 
+        tabindex="0">
+        <img [alt]="country().nombre" [src]="country().flagSVG" />
+    </div>
+    <div class="diff-item-2" role="img">
+        <img class="blur brightness-75"
+        [alt]="country().nombre"
+        [src]="country().flagSVG" />
+    </div>
+    <div class="diff-resizer"></div>
+</figure>
