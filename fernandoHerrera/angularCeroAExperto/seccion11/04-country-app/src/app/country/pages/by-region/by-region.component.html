@@ -1,0 +1,16 @@
+<section>
+    @for (region of regions; track region) {
+        <button class="m-2 btn w-[100px]" 
+            [class]="region===regionSeleccionada()?'btn-primary':'btn-secondary'"
+            (click)="regionSeleccionada.set(region)"
+            #botonRegion
+        >
+            {{ region }}
+        </button>
+    }
+</section>
+<country-list [countries]="countryResource.value() ?? []"
+    [errorMessage]="countryResource.error()"
+    [isEmpty]="countryResource.value()?.length ===0"
+    [isLoading]="countryResource.isLoading()"
+>
