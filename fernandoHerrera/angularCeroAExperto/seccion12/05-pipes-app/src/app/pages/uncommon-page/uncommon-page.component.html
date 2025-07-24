@@ -1,0 +1,128 @@
+<section class="my-2 mb-5">
+    <h1 class="text-2xl font-bold">Pipes No tan comunes</h1>
+    <h3 class="text-xl font-thin">Pipes incluídos en angular</h3>
+</section>
+
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+    <card titulo="i18nSelectPipe">
+
+        <p> Saludos {{ cliente().name }} es un placer {{ cliente().gender | i18nSelect:mapaInvitacion}} a nuestro evento </p>
+
+        <button class="btn btn-primary"
+            (click)="cambiarCliente()"
+        >
+            Cambiar cliente
+        </button>
+
+    </card>
+
+    <card titulo="i18nPluralPipe">
+
+        <p> Actualmente {{ clientes().length | i18nPlural:mapaPluralCLientes()}} </p>
+
+        <button class="btn btn-primary"
+            (click)="borrarCliente()"
+            [disabled]="clientes().length===0"
+        >
+            Borrar cliente
+        </button>
+
+    </card>    
+
+    <card titulo="i18nPluralPipe">
+
+        <b> Original </b>
+
+        <p class="text-primary">
+            {{ clientes().join(", ") }}
+        </p>
+
+        <b class="mt-2">
+            Slice:0:2
+        </b>
+
+        <p class="text-primary">
+            {{ clientes()|slice:0:2}}
+        </p>
+
+        <b class="mt-2">
+            Slice:1:2
+        </b>
+
+        <p class="text-primary">
+            {{ clientes()|slice:1:2}}
+        </p>
+
+        <b class="mt-2">
+            Slice:1:3
+        </b>
+
+        <p class="text-primary">
+            {{ clientes()|slice:1:3}}
+        </p>
+
+        <b class="mt-2">
+            Slice:3:4
+        </b>
+
+        <p class="text-primary">
+            {{ clientes()|slice:3:4}}
+        </p>
+
+        <b class="mt-2">
+            Slice:0:-3
+        </b>
+
+        <p class="text-primary">
+            {{ clientes()|slice:0:-3}}
+        </p>
+
+    </card>        
+
+    <card titulo="JSON Pipe">
+
+        <pre class="text-primary"> {{ clientes() | json }} </pre>
+        <pre class="text-primary"> {{ cliente() | json }} </pre>
+        <p class="text-primary"> {{ clientes().join(', ') | json | uppercase}} </p>
+
+    </card>    
+
+    <card titulo="Keyvalue Pipe">
+
+        <!-- <pre> {{ profile | keyvalue | json }} </pre> -->
+
+        <ul>
+            @for (item of profile | keyvalue; track $index) {
+                <li>
+                    <strong> {{ item.key | titlecase }} </strong>
+                    <span class="text-primary">
+                        <span> {{ item.value }} </span>
+                    </span>
+                </li>
+            }
+        </ul>
+
+    </card>      
+
+    <card titulo="Async Piñe">
+
+        <p> {{ promiseValue | async }} </p>
+
+        @if( promiseValue | async; as value ){
+            <p class="text-primary"> {{ value }} </p>
+        }@else {
+            <p class="text-primary"> Espere por favor </p>
+        }
+
+        <h3> Observable </h3>
+        <p> {{ myObservable | async }} </p>
+        @if(myObservable|async; as value){
+            <p> {{ value }} </p>
+        }@else {
+            <p>Esperando valor ...</p>
+        }
+
+    </card>  
+
+</section>
