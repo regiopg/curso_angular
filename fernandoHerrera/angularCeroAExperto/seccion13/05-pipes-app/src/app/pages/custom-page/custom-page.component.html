@@ -1,0 +1,82 @@
+<section class="my-2">
+    <h1 class="text-2xl font-bold">Pipes Personalizados</h1>
+    <h3 class="text-xl font-thin">Pipes no incluídos en angular</h3>
+</section>
+
+<div class="stats shadow">
+    <div class="stat">
+        <div class="stat-title">ToggleCasePipe</div>
+        <div class="stat-value"> {{ name() | toggleCase : mayuscula()}} </div>
+        <div class="stat-desc"> {{ name() }} </div>
+        <button class="btn btn-primary m-5"
+        (click)="mayuscula.set(!mayuscula())"        
+        >
+        Cambiar {{ mayuscula() ? 'minusculas' : 'mayusculas' }}
+    </button>
+</div>
+</div>
+
+<div class="divider m-5"></div>
+
+<section>
+    <h1 class="text-2xl font-bold"> Filtrando por: {{ search() }}, ordenando por: {{ sortBy() }} </h1>
+    <div class="flex gap-5 justify-end w-full my-5">
+        <input type="text" class="input input-bordered w-full max-w-xs"
+            placeholder="Buscar héroe"
+            #txtSearch
+            (input)="search.set(txtSearch.value)"
+        >
+        <div class="flex flex-1"></div>
+        <button (click)="sortBy.set('name')" class="btn btn-primary">Por nombre</button>
+        <button (click)="sortBy.set('canFly')" class="btn btn-accent">Por volar</button>
+        <button (click)="sortBy.set('color')" class="btn btn-secondary">Por color</button>
+        <button (click)="sortBy.set('creator')" class="btn btn-info">Por creador</button>
+    </div>
+</section>
+
+<div class="overflow-x-auto w-full">
+    <table class="table table-xs w-full">
+        <!-- head -->
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Puede volar</th>
+                <th>Color</th>
+                <th>Creador</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- row 1 -->
+            @for (heroe of heroes()| heroFilter:search() | heroSortBy:sortBy() ; track heroe.id; let indice = $index) {
+                <tr>
+                    <th> {{ indice+1 }} </th>
+                    <td> 
+                        {{ heroe.name }} 
+                    </td>
+                    <td>
+                        <span class="text-xs w-44"
+                            [class.text-success]="heroe.canFly"
+                            [class.text-secondary]="!heroe.canFly"
+                        >
+                            {{ heroe.canFly | canFly }} 
+                        </span> 
+                    </td>
+                    <td>
+                        <span [style.color]="heroe.color | colorPipe:true">
+                            {{ heroe.color | colorPipe | titlecase}} 
+                        </span> 
+                    </td>
+                    <td>
+                        <span class="text-xs w-44"
+                            [class.text-primary]="heroe.creator===0"
+                            [class.text-accent]="heroe.creator===1"
+                        >
+                            {{ heroe.creator | creadorPipe }} 
+                        </span> 
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

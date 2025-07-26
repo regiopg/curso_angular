@@ -1,0 +1,31 @@
+<section class="my-2">
+    <h1 class="text-2xl font-bold">Pipes Numéricos</h1>
+    <h3 class="text-xl font-thin">Pipes incluídos en angular</h3>
+</section>
+
+<div class="stats shadow w-full">
+    <div class="stat place-items-center">
+        <div class="stat-title"> Decimal Pipe: 1.2-2 </div>
+        <div class="stat-value"> {{ ventasTotales() | number:'1.2-2'}} </div>
+        <div class="stat-desc"> {{ ventasTotales() }} </div>
+    </div>
+    
+    <div class="stat place-items-center">
+        <div class="stat-title"> Decimal Pipe: 1.1-2 </div>
+        <div class="stat-value"> {{ ventasTotales() + 1234.8733 | number:'1.1-2'}} </div>
+        <div class="stat-desc"> {{ ventasTotales() }} </div>
+    </div>
+    
+    <div class="stat place-items-center">
+        <div class="stat-title">Currency Pipe</div>
+        <div class="stat-value"> {{ ventasTotales() | currency:'CAD':'symbol-narrow'}} </div>
+        <div class="stat-desc"> {{ ventasTotales() }} </div>
+    </div>
+
+    <div class="stat place-items-center">
+        <div class="stat-title">Percent Pipe:'1.2-2'</div>
+        <div class="stat-value"> {{ percent() | percent:'1.2-2' }} </div>
+        <div class="stat-desc"> {{ percent() }} </div>
+    </div>    
+
+</div>

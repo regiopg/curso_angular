@@ -1,0 +1,1 @@
+export type LocaleIinterface='es'|'fr'|'en'
