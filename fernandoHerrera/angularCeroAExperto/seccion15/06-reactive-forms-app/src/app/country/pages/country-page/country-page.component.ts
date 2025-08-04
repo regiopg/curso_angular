@@ -1,11 +1,79 @@
-import { Component } from '@angular/core';
+import { JsonPipe } from '@angular/common';
+import { Component, effect, inject, signal } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CountryService } from '../../services/country.service';
+import { Country } from '../../interfaces/country.interface';
+import { filter, switchMap, tap } from 'rxjs';
 
 @Component({
     selector: 'app-country-page',
-    imports: [],
+    imports: [ 
+        ReactiveFormsModule,
+        JsonPipe
+    ],
     templateUrl: './country-page.component.html',
     styleUrl: './country-page.component.css'
 })
 export default class CountryPageComponent {
-    
+ 
+    private fb = inject(FormBuilder)
+    countryService = inject(CountryService)
+
+    regions = signal(this.countryService.regions)
+    countriesByRegion = signal<Country[]>([])
+    borders = signal<Country[]>([])
+
+    public myForm = this.fb.group({
+        region:['',Validators.required],
+        country:['',Validators.required],
+        border:['',Validators.required]
+    })
+
+    formChangegEffect = effect((limpieza)=>{
+        const regionSuscription = this.onRegionChanged()
+        const countrySuscription = this.onCountryChanged()
+
+        limpieza(()=>{
+            regionSuscription.unsubscribe()
+            countrySuscription.unsubscribe()
+        })
+        
+    })
+
+    onRegionChanged(){  
+        return this.myForm.get('region')!.valueChanges
+            .pipe(
+                tap(()=>this.myForm.get('country')!.setValue('')),
+                tap(()=> this.myForm.get('border')!.setValue('') ),
+                tap(()=>{
+                    this.borders.set([]);
+                    this.countriesByRegion.set([])
+                }),
+                switchMap(region=>this.countryService.getCountriesByRegion(region!))
+            )
+            .subscribe(countries=>{
+                this.countriesByRegion.set(countries)
+            })
+    }
+
+    onCountryChanged(){
+        return this.myForm.get('country')!.valueChanges
+            .pipe(
+                tap(valor=>{
+                    console.log({valor})
+                    this.myForm.get('border')!.setValue('')
+                    this.borders.set([])
+                }),
+                filter(valor=>{
+                    console.log(valor);
+                    return valor!.length>0
+                }),                
+                switchMap(codigoPais=>this.countryService.getCountryByAlphaCode(codigoPais??'')),
+                switchMap(country=>this.countryService.getCountryNamesByNamesArray(country.borders))
+            )
+            .subscribe( countries =>{
+                this.borders.set(countries)
+            } )
+    }
+
 }
